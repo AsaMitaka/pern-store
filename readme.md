@@ -7,3 +7,6 @@
 - node.js
 - express
 - pg
+- sequelize
+- cors
+- dotenv
