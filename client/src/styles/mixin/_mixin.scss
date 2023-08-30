@@ -1,0 +1,13 @@
+@mixin wrapper {
+  max-width: 1000px;
+}
+
+@mixin link {
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    color: black;
+    text-decoration: underline;
+  }
+}
