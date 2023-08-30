@@ -1,6 +1,11 @@
 ## client:
 
-- react
+- react-vite
+- zustand
+- axios
+- jwt-decode
+- react-router-dom
+- sass
 
 ## server:
 
