@@ -20,7 +20,11 @@ export interface DeviceState {
   types: Type[];
   brands: Brand[];
   devices: Device[];
+  selectedType: object | Type;
+  selectedBrand: object | Brand;
   setTypes: (types: Type[]) => void;
   setBrands: (brands: Brand[]) => void;
   setDevices: (devices: Device[]) => void;
+  setSelectedType: (type: Type) => void;
+  setSelectedBrand: (brand: Brand) => void;
 }
