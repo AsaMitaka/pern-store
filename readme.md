@@ -5,7 +5,7 @@
 - axios
 - jwt-decode
 - react-router-dom
-- sass
+- bootstrap, react-bootstrap
 
 ## server:
 
