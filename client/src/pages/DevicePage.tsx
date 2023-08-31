@@ -1,5 +1,21 @@
+import { Col, Container } from 'react-bootstrap';
+
 const DevicePage = () => {
-  return <div>DevicePage</div>;
+  const device = {
+    id: 1,
+    name: 'Samsung Galaxy Note 12',
+    price: 1000,
+    rating: 5,
+    img: '',
+  };
+
+  return (
+    <Container>
+      <Col md={4}></Col>
+      <Col md={4}></Col>
+      <Col md={4}></Col>
+    </Container>
+  );
 };
 
 export default DevicePage;
