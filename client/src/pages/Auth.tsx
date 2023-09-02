@@ -1,15 +1,43 @@
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Button, Card, Container, Form } from 'react-bootstrap';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
-import { Container, Form } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { login, registration } from '../services/userAPI';
+import userStore from '../store/UserStore';
 
 const Auth = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_ROUTE;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const setAuth = userStore((state) => state.setAuth);
+  const setUser = userStore((state) => state.setUser);
+
+  const onHandleAction = async () => {
+    try {
+      let user;
+      if (isLogin) {
+        if (!(email || password)) {
+          return;
+        }
+
+        user = await login(email, password);
+      } else {
+        if (!(email || password)) {
+          return;
+        }
+
+        user = await registration(email, password);
+      }
+
+      setUser(user);
+      setAuth(true);
+      navigate('/');
+    } catch (e) {
+      console.warn(e.response.data.message);
+    }
+  };
 
   return (
     <Container
@@ -29,6 +57,7 @@ const Auth = () => {
             placeholder={isLogin ? 'Password' : 'Write password...'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            type="password"
           />
           <div className="d-flex justify-content-between mt-3 pl-2 pr-2">
             {isLogin ? (
@@ -40,7 +69,9 @@ const Auth = () => {
                 Do you have account? <NavLink to={LOGIN_ROUTE}>Login!</NavLink>
               </div>
             )}
-            <Button variant="outline-success">{isLogin ? 'Enter' : 'Sign Up'}</Button>
+            <Button variant="outline-success" onClick={onHandleAction}>
+              {isLogin ? 'Enter' : 'Sign Up'}
+            </Button>
           </div>
         </Form>
       </Card>
