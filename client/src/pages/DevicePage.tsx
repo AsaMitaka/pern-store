@@ -1,13 +1,29 @@
+import { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { fetchOneDevice } from '../services/deviceAPI';
+import { useParams } from 'react-router-dom';
 
 const DevicePage = () => {
-  const device = {
-    id: 1,
-    name: 'Samsung Galaxy Note 12',
-    price: 1000,
-    rating: 5,
-    img: '',
-  };
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [device, setDevice] = useState([{ id: 0, name: '', price: 0, rating: 5, img: '' }]);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchOneDevice(id);
+        console.log(data);
+
+        setDevice(data);
+      } catch (error) {
+        console.warn(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
+
   const description = [
     {
       id: 1,
@@ -30,7 +46,7 @@ const DevicePage = () => {
     <Container className="mt-3 d-flex flex-column">
       <Row>
         <Col md={4}>
-          <Image width={300} height={300} src={device.img} />
+          <Image width={300} height={300} src={`${import.meta.env.VITE_API_URL}/${device.img}`} />
         </Col>
         <Col md={4}>
           <Row>
