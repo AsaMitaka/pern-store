@@ -20,6 +20,9 @@ export interface DeviceState {
   types: Type[];
   brands: Brand[];
   devices: Device[];
+  page: number;
+  totalCount: number;
+  limit: number;
   selectedType: object | Type;
   selectedBrand: object | Brand;
   setTypes: (types: Type[]) => void;
@@ -27,4 +30,6 @@ export interface DeviceState {
   setDevices: (devices: Device[]) => void;
   setSelectedType: (type: Type) => void;
   setSelectedBrand: (brand: Brand) => void;
+  setPage: (page: number) => void;
+  setTotalCount: (totalCount: number) => void;
 }
