@@ -1,10 +1,21 @@
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import CreateBrand from '../components/modal/createbrand';
 import CreateType from '../components/modal/createtype';
 import CreateDevice from '../components/modal/createdevice';
-import { useState } from 'react';
+import userStore from '../store/UserStore';
 
 const Admin: React.FC = () => {
+  const navigate = useNavigate();
+  const user = userStore((state) => state.user);
+  const isAdmin = user.role === 'ADMIN';
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate('/');
+    }
+  }, [isAdmin, navigate]);
+
   const [typeVisible, setTypeVisible] = useState<boolean>(false);
   const [brandVisible, setBrandVisible] = useState<boolean>(false);
   const [deviceVisible, setDeviceVisible] = useState<boolean>(false);
