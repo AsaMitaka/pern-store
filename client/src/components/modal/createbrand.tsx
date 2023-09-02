@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { ShowHide } from '../../types/showHide';
+import { createBrand } from '../../services/deviceAPI';
 
 const CreateBrand: React.FC<ShowHide> = ({ show, onHide }) => {
   const [brand, setBrand] = useState('');
@@ -9,6 +10,7 @@ const CreateBrand: React.FC<ShowHide> = ({ show, onHide }) => {
       return;
     }
 
+    createBrand({ name: brand }).then(() => setBrand(''));
     onHide();
   };
 

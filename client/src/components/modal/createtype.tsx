@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { ShowHide } from '../../types/showHide';
+import { createType } from '../../services/deviceAPI';
 
 const CreateType: React.FC<ShowHide> = ({ show, onHide }) => {
   const [type, setType] = useState('');
@@ -9,6 +10,7 @@ const CreateType: React.FC<ShowHide> = ({ show, onHide }) => {
       return;
     }
 
+    createType({ name: type }).then(() => setType(''));
     onHide();
   };
 
