@@ -45,7 +45,7 @@ class UserController {
         return res.status(500).json(ApiError.internal('Password or email is incorrect'));
       }
 
-      const token = jwt.sign({ id: user.id, email, role }, process.env.SECRET_KEY, {
+      const token = jwt.sign({ id: user.id, email, role: user.role }, process.env.SECRET_KEY, {
         expiresIn: '24h',
       });
       return res.json({ token });
@@ -56,7 +56,11 @@ class UserController {
 
   async check(req, res, next) {
     try {
-      const token = jwt.sign(req.user.id, req.user.email, req.user.role);
+      const token = jwt.sign(
+        { id: req.user.id, email: req.user.email, role: req.user.role },
+        process.env.SECRET_KEY,
+        { expiresIn: '24h' },
+      );
 
       return res.json({ token });
     } catch (error) {
