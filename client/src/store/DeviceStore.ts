@@ -5,6 +5,9 @@ const deviceStore = create<DeviceState>((set) => ({
   types: [],
   brands: [],
   devices: [],
+  page: 1,
+  totalCount: 0,
+  limit: 3,
   selectedType: {},
   selectedBrand: {},
   setTypes: (types) =>
@@ -15,6 +18,16 @@ const deviceStore = create<DeviceState>((set) => ({
     set(() => ({
       brands: brands,
     })),
+  setPage: (page) => {
+    set(() => ({
+      page: page,
+    }));
+  },
+  setTotalCount: (count) => {
+    set(() => ({
+      totalCount: count,
+    }));
+  },
   setDevices: (devices) =>
     set(() => ({
       devices: devices,
