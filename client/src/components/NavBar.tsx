@@ -6,8 +6,14 @@ import { Button, Container, Nav, Navbar } from 'react-bootstrap';
 const NavBar = () => {
   const isAuth = userStore((store) => store.isAuth);
   const setAuth = userStore((store) => store.setAuth);
+  const setUser = userStore((store) => store.setUser);
+  const user = userStore((store) => store.user);
+  const isAdmin = user.role === 'ADMIN';
+
   const handleAuth = () => {
-    setAuth(!isAuth);
+    setAuth(false);
+    setUser({});
+    localStorage.removeItem('token');
   };
 
   return (
@@ -18,11 +24,13 @@ const NavBar = () => {
         </NavLink>
         {isAuth ? (
           <Nav className="ml-auto" style={{ color: 'white' }}>
-            <Button variant={'outline-light'}>
-              <Link to={ADMIN_ROUTE} style={{ textDecoration: 'none' }}>
-                Admin
-              </Link>
-            </Button>
+            {isAdmin && (
+              <Button variant={'outline-light'}>
+                <Link to={ADMIN_ROUTE} style={{ textDecoration: 'none' }}>
+                  Admin
+                </Link>
+              </Button>
+            )}
             <Button variant={'outline-light'} style={{ marginLeft: '1em' }}>
               <Link to={BASKET_ROUTE} style={{ textDecoration: 'none' }}>
                 Basket
@@ -34,8 +42,8 @@ const NavBar = () => {
           </Nav>
         ) : (
           <Nav className="ml-auto" style={{ color: 'white' }}>
-            <Button variant={'outline-light'} onClick={handleAuth}>
-              Login
+            <Button variant={'outline-light'}>
+              <Link to={LOGIN_ROUTE}>Login</Link>
             </Button>
           </Nav>
         )}
